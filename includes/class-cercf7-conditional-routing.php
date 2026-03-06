@@ -24,14 +24,16 @@ class CERCF7_Conditional_Email_Routing {
     public function enqueue_admin_scripts() {
 		wp_enqueue_style(
             'cercf7-styles',
-            CERCF7_PLUGIN_URL . 'assets/styles.css'
+            CERCF7_PLUGIN_URL . 'assets/styles.css',
+            [],
+            '1.4.0'
         );
 		
         wp_enqueue_script(
             'cercf7-script',
             CERCF7_PLUGIN_URL . 'assets/scripts.js',
             [ 'jquery' ],
-            '1.0',
+            '1.4.0',
             true
         );
 		
@@ -40,6 +42,12 @@ class CERCF7_Conditional_Email_Routing {
     }
 
     public function apply_conditional_routing( $components, $contact_form, $submission ) {
+		//Exclude the mail_2 template from conditional routing.
+		$template_name = WPCF7_Mail::get_current_template_name();
+		if ( $template_name == 'mail_2' ) {
+			return $components;
+		}
+		
         $form_id = $contact_form->id();
 		
 		$routing_enabled = get_post_meta( $form_id, '_cercf7_routing_enabled', true );
@@ -83,6 +91,7 @@ class CERCF7_Conditional_Email_Routing {
 							}
 						}
 					}else{
+						$posted_field = strtolower(trim($posted_field));
 						$recipient[] = $routing[$posted_field];
 					}
 
@@ -187,8 +196,8 @@ class CERCF7_Conditional_Email_Routing {
 							foreach( $routings as $value => $email ) :  
 							?>
 							<li>
-								<span><?php echo esc_html__( 'Value ==', 'conditional-email-routing-for-contact-form-7' ); ?></span> <input type="text" name="cercf7_<?php echo esc_attr( $field ); ?>_value[<?php echo esc_attr($index); ?>]" value="<?php echo esc_html( $value ); ?>" placeholder="<?php echo esc_html__( 'Enter a value', 'conditional-email-routing-for-contact-form-7' ); ?>" required> 
-								<span><?php echo esc_html__( 'Mail to', 'conditional-email-routing-for-contact-form-7' ); ?></span> <input type="text" name="cercf7_<?php echo esc_attr( $field ); ?>_mail[<?php echo esc_attr($index); ?>]" value="<?php echo esc_attr( $email ); ?>" placeholder="<?php echo esc_html__( 'Recipient email', 'conditional-email-routing-for-contact-form-7' ); ?>" required> <span class="remove_condition" title="<?php echo esc_html__( 'Remove Condition', 'conditional-email-routing-for-contact-form-7' ); ?>">✕</span>
+								<span><?php echo esc_html__( 'Value ==', 'conditional-email-routing-for-contact-form-7' ); ?></span> <input type="text" name="cercf7_<?php echo esc_attr( $field ); ?>_value[<?php echo esc_attr($index); ?>]" value="<?php echo esc_html( $value ); ?>" placeholder="<?php echo esc_html__( 'Enter an expected value', 'conditional-email-routing-for-contact-form-7' ); ?>" required> 
+								<span><?php echo esc_html__( 'Mail to', 'conditional-email-routing-for-contact-form-7' ); ?></span> <input type="text" name="cercf7_<?php echo esc_attr( $field ); ?>_mail[<?php echo esc_attr($index); ?>]" value="<?php echo esc_attr( $email ); ?>" placeholder="<?php echo esc_html__( 'Recipient Email(s)', 'conditional-email-routing-for-contact-form-7' ); ?>" required> <span class="cercf7-tooltip"><span class="cercf7-tooltip-icon">?</span> <span class="cercf7-tooltip-text">Separate multiple email recipients with commas, e.g. sales@example.com, sales2@example.com <br> (Pro feature)</span></span> <span class="remove_condition" title="<?php echo esc_html__( 'Remove Condition', 'conditional-email-routing-for-contact-form-7' ); ?>">✕</span>
 							</li>
 							<?php 
 							$index++;
@@ -199,7 +208,7 @@ class CERCF7_Conditional_Email_Routing {
 						<a href="#" class="cercf7_add_condition button"><?php echo esc_html__( '+ Add Condition', 'conditional-email-routing-for-contact-form-7' ); ?></a>
 					</div>
 					<div class="remove-role-wrapper">
-						<a class="cercf7_remove_role disabled button"><?php echo esc_html__( 'Remove Role', 'conditional-email-routing-for-contact-form-7' ); ?></a><a class="cercf7-pro-link" target="_blank" href="https://codecanyon.net/item/conditional-email-routing-for-contact-form-7-pro/55815361">Pro Feature</a>
+						<a class="cercf7_remove_role disabled button"></a><a class="cercf7-pro-link" target="_blank" href="https://atplugins.com/products/conditional-email-routing-for-contact-form-7/">Pro Feature</a>
 					</div>
 				</div>
 				<?php 
@@ -228,17 +237,43 @@ class CERCF7_Conditional_Email_Routing {
 						<a href="#" class="cercf7_add_condition button"><?php echo esc_html__( '+ Add Condition', 'conditional-email-routing-for-contact-form-7' ); ?></a>
 					</div>
 					<div class="remove-role-wrapper">
-						<a class="cercf7_remove_role disabled button"><?php echo esc_html__( 'Remove Role', 'conditional-email-routing-for-contact-form-7' ); ?></a><a class="cercf7-pro-link" target="_blank" href="https://codecanyon.net/item/conditional-email-routing-for-contact-form-7-pro/55815361">Pro Feature</a>
+						<a class="cercf7_remove_role disabled button"><?php echo esc_html__( 'Remove Role', 'conditional-email-routing-for-contact-form-7' ); ?></a><a class="cercf7-pro-link" target="_blank" href="https://atplugins.com/products/conditional-email-routing-for-contact-form-7/">Pro Feature</a>
 					</div>
 				</div>
 				<?php
 				}
 				?>
 			</div>
-			<a id="cercf7_add_role" class="cercf7_add_role disabled button"><?php echo esc_html__( '+ Add Role', 'conditional-email-routing-for-contact-form-7' ); ?></a><a class="cercf7-pro-link" target="_blank" href="https://codecanyon.net/item/conditional-email-routing-for-contact-form-7-pro/55815361">Pro Feature</a>
+			<a id="cercf7_add_role" class="cercf7_add_role disabled button"><?php echo esc_html__( '+ Add Role', 'conditional-email-routing-for-contact-form-7' ); ?></a>
+			<a class="cercf7-pro-link" target="_blank" href="https://atplugins.com/products/conditional-email-routing-for-contact-form-7/">Pro Feature</a>
+			
+			<!-- AND-condition rules section (new feature) -->
+			<hr class="cercf7-section-divider">
+			<div class="cercf7-pro-demo-disabled">
+				<h3 class="cercf7-section-title">AND Condition Rules</h3>
+				<p>Route emails when multiple fields ALL match at the same time.</p>
+				<p>
+					<strong>Example:</strong><br>
+					<code>If 'department' == 'support' AND 'priority' == 'high' → Mail To 'support@example.com'</code>
+				</p>
+
+				<div id="cercf7_and_roles">
+					<div class="cercf7-and-role"><div class="cercf7-and-conditions-wrapper"><ul class="cercf7_and_conditions_list"><li class="cercf7-and-row"><span class="cercf7-if-badge">If</span><select class="cercf7_and_field_select"><option value="">-Select form field-</option>
+					</select><span class="cercf7-eq">==</span><input type="text" value="" placeholder="Enter a value"><span class="cercf7-remove-and-cond" title="Remove">✕</span></li><li class="cercf7-and-row"><span class="cercf7-and-badge">AND</span><select class="cercf7_and_field_select"><option value="">-Select form field-</option>
+					</select><span class="cercf7-eq">==</span><input type="text" value="" placeholder="Enter a value"><span class="cercf7-remove-and-cond" title="Remove">✕</span></li></ul><a href="#" class="cercf7_add_and_cond button">+ Add AND Condition</a></div><div class="cercf7-and-mailto-wrapper"><span>Mail to</span><input type="text" value="" placeholder="Recipient email(s)"><span class="cercf7-tooltip"><span class="cercf7-tooltip-icon">?</span><span class="cercf7-tooltip-text">Separate multiple email recipients with commas, e.g. sales@example.com, sales2@example.com</span></span></div><div class="remove-role-wrapper"><a href="#" class="cercf7_remove_and_role button" title="Remove Rule"></a></div></div>
+				</div>
+				<a href="#" id="cercf7_add_and_role" class="cercf7_add_role button">+ Add AND Rule</a>
+			</div>
+			<a class="cercf7-pro-link" target="_blank" href="https://atplugins.com/products/conditional-email-routing-for-contact-form-7/">Pro Feature</a>
+			<hr class="cercf7-section-divider">
+			<!-- End AND-condition rules section -->
+			
 			<div class="cercf7-pro-box">
 				<p>The Pro version offers advanced features like multiple conditions, allowing you to create complex logic for email routing. With this, you can send emails to multiple addresses when several conditions are met, making it ideal for handling intricate workflows and ensuring emails reach the right recipients efficiently.</p>
-				<a target="_blank" class="button" href="https://codecanyon.net/item/conditional-email-routing-for-contact-form-7-pro/55815361">Buy Pro</a>
+				<a target="_blank" class="button" style="background: #20b620;color: #fff;border-color: #20b620;padding: 3px 30px;" href="https://atplugins.com/products/conditional-email-routing-for-contact-form-7/">Buy Pro</a>
+			</div>
+			<div class="cercf7-pro-box-review">
+				<p><strong>Enjoying this plugin?</strong><br>If it’s helping your work, please consider leaving a 5-star review on WordPress.org. Your feedback helps improve the plugin and supports ongoing development. <a target="_blank" href="https://wordpress.org/support/plugin/conditional-email-routing-for-contact-form-7/reviews/?rate=5#new-post">Leave a Review ⭐⭐⭐⭐⭐</a></p>
 			</div>
 		</div>
        <?php wp_nonce_field( 'cercf7_meta_box_nonce', 'cercf7_meta_box_noncename' ); ?>

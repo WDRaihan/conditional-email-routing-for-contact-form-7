@@ -40,7 +40,7 @@
 				const newCondition = document.createElement('li');
 				newCondition.innerHTML = `
 					<span>${__('Value ==', 'cercf7-pro')}</span> <input type="text" name="cercf7_${selectedField}_value[${conditionIndex}]" value="" placeholder="${__('Enter a value', 'cercf7-pro')}" required> 
-					<span>${__('Mail to', 'cercf7-pro')}</span> <input type="text" name="cercf7_${selectedField}_mail[${conditionIndex}]" value="" placeholder="${__('Recipient email', 'cercf7-pro')}" required> <span class="remove_condition" title="${__('Remove Condition', 'cercf7-pro')}">✕</span>
+					<span>${__('Mail to', 'cercf7-pro')}</span> <input type="text" name="cercf7_${selectedField}_mail[${conditionIndex}]" value="" placeholder="${__('Recipient email(s)', 'cercf7-pro')}" required> <span class="cercf7-tooltip"><span class="cercf7-tooltip-icon">?</span> <span class="cercf7-tooltip-text">Separate multiple email recipients with commas, e.g. sales@example.com, sales2@example.com <br> (Pro feature)</span></span> <span class="remove_condition" title="${__('Remove Condition', 'cercf7-pro')}">✕</span>
 				`;
 				conditionsList.appendChild(newCondition);
 			});
