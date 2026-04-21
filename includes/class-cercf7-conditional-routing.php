@@ -26,14 +26,14 @@ class CERCF7_Conditional_Email_Routing {
             'cercf7-styles',
             CERCF7_PLUGIN_URL . 'assets/styles.css',
             [],
-            '1.4.0'
+            '1.4.1'
         );
 		
         wp_enqueue_script(
             'cercf7-script',
             CERCF7_PLUGIN_URL . 'assets/scripts.js',
             [ 'jquery' ],
-            '1.4.0',
+            '1.4.1',
             true
         );
 		

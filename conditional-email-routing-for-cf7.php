@@ -3,7 +3,7 @@
  * Plugin Name: MailRoute - Conditional Email Routing For Contact Form 7
  * Requires Plugins: contact-form-7
  * Description: Routes email to different recipients based on form field values.
- * Version: 1.4.0
+ * Version: 1.4.1
  * Requires at least: 5.2
  * Requires PHP: 7.2
  * Author: atplugins

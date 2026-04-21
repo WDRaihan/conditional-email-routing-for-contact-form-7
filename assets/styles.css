@@ -344,7 +344,6 @@ a.cercf7_add_and_cond.button {
     z-index: 1;
     font-size: 13px;
     right: 0;
-    white-space: nowrap;
 }
 
 .cercf7-and-mailto-wrapper .cercf7-tooltip:hover .cercf7-tooltip-text {
