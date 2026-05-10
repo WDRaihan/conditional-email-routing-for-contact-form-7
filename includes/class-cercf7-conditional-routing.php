@@ -269,7 +269,7 @@ class CERCF7_Conditional_Email_Routing {
 			<!-- End AND-condition rules section -->
 			
 			<div class="cercf7-pro-box">
-				<p>The Pro version offers advanced features like multiple conditions, allowing you to create complex logic for email routing. With this, you can send emails to multiple addresses when several conditions are met, making it ideal for handling intricate workflows and ensuring emails reach the right recipients efficiently.</p>
+				<p>The Pro version offers advanced features like multiple conditions, allowing you to create complex logic for email routing. With this, you can send emails to multiple addresses when several conditions are met, making it ideal for handling intricate workflows and ensuring emails reach the right recipients efficiently. It also includes customized Mail 2 templates based on user selections.</p>
 				<a target="_blank" class="button" style="background: #20b620;color: #fff;border-color: #20b620;padding: 3px 30px;" href="https://atplugins.com/products/conditional-email-routing-for-contact-form-7/">Buy Pro</a>
 			</div>
 			<div class="cercf7-pro-box-review">
