@@ -153,6 +153,9 @@ Yes. You can add different email routing rules to each individual Contact Form 7
 
 == Changelog ==
 
+= 1.4.2 =
+Added conditional mail 2 auto responder in mail tab(pro feature).
+
 = 1.4.1 =
 Fixed some UI issue
 
