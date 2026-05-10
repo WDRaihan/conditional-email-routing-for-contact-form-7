@@ -22,6 +22,15 @@ function cercf7_render_editor_panel( $post ) {
 		<h2><?php _e( 'Conditional Mail 2 Rules', 'cercf7-pro' ); ?></h2>
 		<p><?php _e( 'Define rules to override the auto-responder (Mail 2) based on user input.', 'cercf7-pro' ); ?></p>
 
+		<div class="cercf7-field-checkbox" style="margin: 20px 0; padding: 15px; background: #f8f9fa; border-left: 4px solid #0073aa;">
+			<input type="checkbox" value="1">
+			<label style="font-weight: 700; font-size: 1.1em; color: #1d2327;">
+				<?php _e( 'Enable Conditional Mail 2', 'cercf7-pro' ); ?>
+			</label>
+			<p class="description" style="margin-top: 5px;">
+				<?php _e( 'Check this to enable conditional overrides for the Mail 2 (Auto-responder) feature.', 'cercf7-pro' ); ?>
+			</p>
+		</div>
 		<div class="cercf7-field-checkbox" style="margin: 15px 0;">
 			<input type="checkbox" id="cercf7_mail2_skip_default" value="">
 			<label for="cercf7_mail2_skip_default" style="font-weight: 600; color: #d63638;">
