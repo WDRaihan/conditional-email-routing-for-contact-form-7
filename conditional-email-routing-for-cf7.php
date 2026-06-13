@@ -40,8 +40,6 @@ function cercf7_check_dependencies() {
             // The pro version is not active
             require_once CERCF7_PLUGIN_DIR . 'includes/class-cercf7-conditional-routing.php';
         	CERCF7_Conditional_Email_Routing::get_instance();
-
-            require_once CERCF7_PLUGIN_DIR . 'includes/cercf7-conditional-mail2-demo.php';
         }
     }
 }

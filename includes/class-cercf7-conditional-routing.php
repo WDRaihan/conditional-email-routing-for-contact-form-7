@@ -154,7 +154,6 @@ class CERCF7_Conditional_Email_Routing {
 				<div class="cercf7-roles-header">
 					<div class="cercf7-header-field"><?php echo esc_html__( 'Form Field', 'conditional-email-routing-for-contact-form-7' ); ?></div>
 					<div class="cercf7-header-conditions"><?php echo esc_html__( 'Conditions', 'conditional-email-routing-for-contact-form-7' ); ?></div>
-					<div class="cercf7-header-action"><?php echo esc_html__( 'Remove Role', 'conditional-email-routing-for-contact-form-7' ); ?></div>
 				</div>
 				<!--To duplicate-->
 				<select style="display:none" class="cercf7_selected_field_options">
@@ -207,9 +206,6 @@ class CERCF7_Conditional_Email_Routing {
 						</ul>
 						<a href="#" class="cercf7_add_condition button"><?php echo esc_html__( '+ Add Condition', 'conditional-email-routing-for-contact-form-7' ); ?></a>
 					</div>
-					<div class="remove-role-wrapper">
-						<a class="cercf7_remove_role disabled button"></a><a class="cercf7-pro-link" target="_blank" href="https://atplugins.com/products/conditional-email-routing-for-contact-form-7/">Pro Feature</a>
-					</div>
 				</div>
 				<?php 
 				endforeach; 
@@ -236,37 +232,11 @@ class CERCF7_Conditional_Email_Routing {
 						</ul>
 						<a href="#" class="cercf7_add_condition button"><?php echo esc_html__( '+ Add Condition', 'conditional-email-routing-for-contact-form-7' ); ?></a>
 					</div>
-					<div class="remove-role-wrapper">
-						<a class="cercf7_remove_role disabled button"><?php echo esc_html__( 'Remove Role', 'conditional-email-routing-for-contact-form-7' ); ?></a><a class="cercf7-pro-link" target="_blank" href="https://atplugins.com/products/conditional-email-routing-for-contact-form-7/">Pro Feature</a>
-					</div>
 				</div>
 				<?php
 				}
 				?>
 			</div>
-			<a id="cercf7_add_role" class="cercf7_add_role disabled button"><?php echo esc_html__( '+ Add Role', 'conditional-email-routing-for-contact-form-7' ); ?></a>
-			<a class="cercf7-pro-link" target="_blank" href="https://atplugins.com/products/conditional-email-routing-for-contact-form-7/">Pro Feature</a>
-			
-			<!-- AND-condition rules section (new feature) -->
-			<hr class="cercf7-section-divider">
-			<div class="cercf7-pro-demo-disabled">
-				<h3 class="cercf7-section-title">AND Condition Rules</h3>
-				<p>Route emails when multiple fields ALL match at the same time.</p>
-				<p>
-					<strong>Example:</strong><br>
-					<code>If 'department' == 'support' AND 'priority' == 'high' → Mail To 'support@example.com'</code>
-				</p>
-
-				<div id="cercf7_and_roles">
-					<div class="cercf7-and-role"><div class="cercf7-and-conditions-wrapper"><ul class="cercf7_and_conditions_list"><li class="cercf7-and-row"><span class="cercf7-if-badge">If</span><select class="cercf7_and_field_select"><option value="">-Select form field-</option>
-					</select><span class="cercf7-eq">==</span><input type="text" value="" placeholder="Enter a value"><span class="cercf7-remove-and-cond" title="Remove">✕</span></li><li class="cercf7-and-row"><span class="cercf7-and-badge">AND</span><select class="cercf7_and_field_select"><option value="">-Select form field-</option>
-					</select><span class="cercf7-eq">==</span><input type="text" value="" placeholder="Enter a value"><span class="cercf7-remove-and-cond" title="Remove">✕</span></li></ul><a href="#" class="cercf7_add_and_cond button">+ Add AND Condition</a></div><div class="cercf7-and-mailto-wrapper"><span>Mail to</span><input type="text" value="" placeholder="Recipient email(s)"><span class="cercf7-tooltip"><span class="cercf7-tooltip-icon">?</span><span class="cercf7-tooltip-text">Separate multiple email recipients with commas, e.g. sales@example.com, sales2@example.com</span></span></div><div class="remove-role-wrapper"><a href="#" class="cercf7_remove_and_role button" title="Remove Rule"></a></div></div>
-				</div>
-				<a href="#" id="cercf7_add_and_role" class="cercf7_add_role button">+ Add AND Rule</a>
-			</div>
-			<a class="cercf7-pro-link" target="_blank" href="https://atplugins.com/products/conditional-email-routing-for-contact-form-7/">Pro Feature</a>
-			<hr class="cercf7-section-divider">
-			<!-- End AND-condition rules section -->
 			
 			<div class="cercf7-pro-box">
 				<p>The Pro version offers advanced features like multiple conditions, allowing you to create complex logic for email routing. With this, you can send emails to multiple addresses when several conditions are met, making it ideal for handling intricate workflows and ensuring emails reach the right recipients efficiently. It also includes customized Mail 2 templates based on user selections.</p>
@@ -312,15 +282,18 @@ class CERCF7_Conditional_Email_Routing {
             $form_fields = array_map( 'sanitize_text_field', wp_unslash($_POST['cercf7_selected_field']) );
             $rules = [];
 
-            foreach ( $form_fields as $form_field ) {
-                if ( isset( $_POST[ "cercf7_{$form_field}_value" ] ) && isset( $_POST[ "cercf7_{$form_field}_mail" ] ) ) {
-                    $values = array_map( 'sanitize_text_field', wp_unslash($_POST[ "cercf7_{$form_field}_value" ]) );
-                    $mails  = array_map( 'sanitize_email', wp_unslash($_POST[ "cercf7_{$form_field}_mail" ]) );
+            // Only allow saving the first field/role for the free version
+            $first_field = !empty($form_fields) ? reset($form_fields) : '';
+
+            if ( !empty($first_field) ) {
+                if ( isset( $_POST[ "cercf7_{$first_field}_value" ] ) && isset( $_POST[ "cercf7_{$first_field}_mail" ] ) ) {
+                    $values = array_map( 'sanitize_text_field', wp_unslash($_POST[ "cercf7_{$first_field}_value" ]) );
+                    $mails  = array_map( 'sanitize_email', wp_unslash($_POST[ "cercf7_{$first_field}_mail" ]) );
 
                     foreach ( $values as $index => $value ) {
                         if ( ! empty( $value ) && ! empty( $mails[ $index ] ) ) {
 							$value = strtolower($value);
-                            $rules[ $form_field ][ $value ] = $mails[ $index ];
+                            $rules[ $first_field ][ $value ] = $mails[ $index ];
                         }
                     }
                 }
