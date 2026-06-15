@@ -2,7 +2,7 @@
 Contributors: atplugins, raihan143
 Tags: contact form 7, email routing, conditional email, email recipient, multiple recipients, contact form 7 addon, conditional logic, dynamic email, cf7 conditional, smart routing, contact form workflow, send to department, route email
 Tested up to: 7.0
-Stable tag: 1.4.3
+Stable tag: 1.4.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -152,6 +152,9 @@ Yes. You can add different email routing rules to each individual Contact Form 7
 2. Conditional Mail 2 Template Tab
 
 == Changelog ==
+
+= 1.4.4 =
+* Removed pro demo features.
 
 = 1.4.3 =
 * Version compatible with WordPress 7.0
